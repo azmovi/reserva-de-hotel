@@ -2,4 +2,4 @@
 
 
 ### Diagrama de classes
-![diagrama]()
+![diagrama](https://raw.githubusercontent.com/azmovi/reserva-de-hotel/master/diagrama_de_classes.iuml)
