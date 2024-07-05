@@ -1,6 +1,6 @@
 package pooa.app.domain;
 
-public class User{
+public abstract class User{
     private long idUser;
     private String username;
     private String password;
