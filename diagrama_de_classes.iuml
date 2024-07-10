@@ -1,21 +1,13 @@
 @startuml
-class Hotel {
 
-}
-
-class Room {
-    +idRoom: int
-    +price: float
-    +capacity: int
-    +is_active: bool
-}
+title Diagrama de Classes Reserva de Hotel
 
 abstract class User {
-    +idUser: int 
+    +userId: int 
     +username: str
     +password: str
-    +is_superuser: bool 
-    +is_active: bool 
+    +isSuperUser: bool 
+    +isActive: bool 
 
     +createUser(): int
     +getUser(): User
@@ -23,20 +15,86 @@ abstract class User {
     +deleteUser(): bool
 }
 
-class Cliente {
-    +clienteID: int
-    +viewProducts() : void
-    +makePurchase() : void
+class Client{
+    +clientId: int
 }
 
 class Admin {
-    +adminID: int
-    +addProduct() : void
-    +removeProduct() : void
-    +viewSalesReports() : void
+    +adminId: int
 }
 
-User <|-- Cliente
+class Hotel {
+    +name: str
+    +address: str
+    +rooms: list<Room>
+    +services: list<Service>
+    +isFull: bool
+    +clients: list<Client>
+    +admins: list<Admin>
+
+    +createRoom(): int
+    +getRoom(): Room
+    +updateRoom(): bool
+    +deleteRoom(): bool
+    
+}
+
+abstract class Room{
+    +roomId: int
+    +isActive: bool
+    +isReserved: bool
+    +width: float
+    +length: float
+    +height: float
+    +capacity: int
+    +price: float
+
+    +area(): float
+    +volume(): float
+}
+
+class SingleRoom {
+    +description: str
+}
+
+class SuiteRoom{
+    +description: str
+}
+
+class FamilyRoom{
+    +description: str
+}
+
+
+class Service {
+    +name: str
+    +capacity: str
+    +description: str
+
+}
+
+class Reservation {
+    +reserveId: int
+    +checkIn: date
+    +checkOut: date
+
+    +utilTime(): str
+}
+
+Room <|-- SuiteRoom
+Room <|-- SingleRoom
+Room <|-- FamilyRoom
+Room  o-- User
+Room  o-- Reservation
+
+Hotel *-- Room
+Hotel *-- Service
+Hotel o-- Admin
+
+
+User <|-- Client
 User <|-- Admin
+
+Client --- Reservation: Realiza
 
 @enduml
