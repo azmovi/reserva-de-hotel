@@ -36,7 +36,6 @@ class Hotel {
     +getRoom(): Room
     +updateRoom(): bool
     +deleteRoom(): bool
-    
 }
 
 abstract class Room{
@@ -65,7 +64,6 @@ class FamilyRoom{
     +description: str
 }
 
-
 class Service {
     +name: str
     +capacity: str
@@ -78,7 +76,7 @@ class Reservation {
     +checkIn: date
     +checkOut: date
 
-    +utilTime(): str
+    +utilTime(): date
 }
 
 Room <|-- SuiteRoom
@@ -95,6 +93,6 @@ Hotel o-- Admin
 User <|-- Client
 User <|-- Admin
 
-Client --- Reservation: Realiza
+Client --- Reservation: make
 
 @enduml
