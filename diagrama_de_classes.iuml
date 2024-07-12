@@ -6,6 +6,7 @@ abstract class Person {
     +name : str
     +birthday: Date
     +phone: str
+    +intolerance: list<str>
 }
 
 abstract class User {
