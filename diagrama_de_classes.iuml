@@ -1,9 +1,14 @@
 @startuml
-
 title Diagrama de Classes Reserva de Hotel
 
+abstract class Person {
+    +personId: int 
+    +name : str
+    +birthday: Date
+    +phone: str
+}
+
 abstract class User {
-    +userId: int 
     +username: str
     +password: str
     +isSuperUser: bool 
@@ -13,29 +18,58 @@ abstract class User {
     +getUser(): User
     +updateUser(): bool
     +deleteUser(): bool
+
+    +createReservation(): int
+    +getReservation(): Reservation
+    +updateReservation(): bool
+    +deleteReservation(): bool
 }
 
-class Client{
-    +clientId: int
+class Client {
+    +members: list<Member> 
+
+    +makeReservation(): bool
+
+}
+
+class Member {
 }
 
 class Admin {
-    +adminId: int
 }
 
 class Hotel {
     +name: str
-    +address: str
+    +address: Address
     +rooms: list<Room>
     +services: list<Service>
     +isFull: bool
     +clients: list<Client>
     +admins: list<Admin>
 
+    +addClient(): bool
+    +addAdmin(): bool
+
     +createRoom(): int
     +getRoom(): Room
     +updateRoom(): bool
     +deleteRoom(): bool
+    +getAvailableRoom(): list<Room>
+
+    +createService(): int
+    +getService(): Service
+    +updateService(): bool
+    +deleteService(): bool
+    +getAvailableService(): list<Service>
+}
+
+class Address {
+    +country: str
+    +state: str
+    +city: str
+    +postalCode: str
+    +street: str
+    +number: int
 }
 
 abstract class Room{
@@ -66,33 +100,37 @@ class FamilyRoom{
 
 class Service {
     +name: str
-    +capacity: str
+    +capacity: int 
     +description: str
-
 }
 
 class Reservation {
     +reserveId: int
-    +checkIn: date
-    +checkOut: date
+    +client: Client 
+    +checkIn: Date
+    +checkOut: Date
 
-    +utilTime(): date
+    +utilTime(): Date
 }
 
 Room <|-- SuiteRoom
 Room <|-- SingleRoom
 Room <|-- FamilyRoom
-Room  o-- User
-Room  o-- Reservation
 
-Hotel *-- Room
-Hotel *-- Service
-Hotel o-- Admin
+Hotel "1" *-- "1..*" Room : have
+Hotel "1" *-- "1..*" Service : have
+Hotel "1" *-- "1..*" Reservation : have
+Hotel "1" o-- "1..*" Admin : have
+Hotel "1" o-- "1"    Address : have
 
+Person <|-- User
+Person <|-- Member
 
 User <|-- Client
 User <|-- Admin
 
-Client --- Reservation: make
+Client "1"-->"0..*" Member : have 
+Client "1"-->"1" Reservation: make
+Client "1"-->"1" Room: occupies
 
 @enduml
