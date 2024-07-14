@@ -6,61 +6,69 @@ abstract class Person {
     +name : str
     +birthday: Date
     +phone: str
-    +intolerance: list<str>
 }
 
-abstract class User {
-    +username: str
-    +password: str
-    +isSuperUser: bool 
-    +isActive: bool 
-
+interface UserActions {
     +createUser(): int
     +getUser(): User
     +updateUser(): bool
     +deleteUser(): bool
+    +getUsers(): list<User>
+}
 
+interface ReservationActions {
     +createReservation(): int
     +getReservation(): Reservation
     +updateReservation(): bool
     +deleteReservation(): bool
+    +getReservations(): list<Reservation>
 }
 
-class Client {
+class Client extends DefaultUser {
     +members: list<Member> 
+}
 
-    +makeReservation(): bool
+abstract class DefaultUser extends Person implements UserActions {
+    +username: str
+    +password: str
+    +isSuperUser: bool 
+    +isActive: bool 
+}
+
+class Admin extends DefaultUser implements ReservationActions, RoomActions, ServiceActions {
 
 }
 
-class Member {
+
+class Member extends Person {
 }
 
-class Admin {
-}
 
-class Hotel {
+class Hotel <<Singleton>> {
     +name: str
     +address: Address
-    +rooms: list<Room>
-    +services: list<Service>
     +isFull: bool
-    +clients: list<Client>
-    +admins: list<Admin>
+    +users: list<DefaultUser>
+    +rooms: list<DefaultRoom>
+    +services: list<Service>
+    +reservations: list<Reservation>
+}
 
-    +addClient(): bool
-    +addAdmin(): bool
-
+interface RoomActions {
     +createRoom(): int
     +getRoom(): Room
     +updateRoom(): bool
     +deleteRoom(): bool
+    +getRooms(): list<Room>
     +getAvailableRoom(): list<Room>
+}
 
+interface ServiceActions {
     +createService(): int
     +getService(): Service
     +updateService(): bool
     +deleteService(): bool
+    +getServices(): list<Service>
     +getAvailableService(): list<Service>
 }
 
@@ -73,7 +81,13 @@ class Address {
     +number: int
 }
 
-abstract class Room{
+interface Room {
+    +getPrice(): float
+    +area(): float
+    +volume(): float
+}
+
+abstract class DefaultRoom implements Room {
     +roomId: int
     +isActive: bool
     +isReserved: bool
@@ -82,56 +96,47 @@ abstract class Room{
     +height: float
     +capacity: int
     +price: float
-
-    +area(): float
-    +volume(): float
-}
-
-class SingleRoom {
     +description: str
 }
 
-class SuiteRoom{
-    +description: str
+
+class SingleRoom extends DefaultRoom {
 }
 
-class FamilyRoom{
-    +description: str
+class SuiteRoom extends DefaultRoom {
 }
 
-class Service {
+class FamilyRoom extends DefaultRoom {
+}
+
+class DefaultService implements Service {
     +name: str
     +capacity: int 
     +description: str
 }
 
-class Reservation {
+interface Reservation {
+    +utilTime(): Date
+}
+
+class DefaultReservation implements Reservation {
     +reserveId: int
     +client: Client 
     +checkIn: Date
     +checkOut: Date
 
-    +utilTime(): Date
 }
 
-Room <|-- SuiteRoom
-Room <|-- SingleRoom
-Room <|-- FamilyRoom
+Hotel "1" o-- "1"     Address: have
+Hotel "1" *-- "0..*"  DefaultUser: have
+Hotel "1" o-- "0..*"  DefaultRoom: have
+Hotel "1" o-- "0..*"  DefaultService: have
+Hotel "1" o-- "0..*"  DefaultReservation: have
 
-Hotel "1" *-- "1..*" Room : have
-Hotel "1" *-- "1..*" Service : have
-Hotel "1" *-- "1..*" Reservation : have
-Hotel "1" o-- "1..*" Admin : have
-Hotel "1" o-- "1"    Address : have
+Admin "1" --- "0..*"  Service: manages
+Admin "1" --- "0..*"  Room: manages
+Admin "1" --- "0..*"  Reservation: manages
+Admin "1" --- "1"     Hotel: manages
 
-Person <|-- User
-Person <|-- Member
-
-User <|-- Client
-User <|-- Admin
-
-Client "1"-->"0..*" Member : have 
-Client "1"-->"1" Reservation: make
-Client "1"-->"1" Room: occupies
-
+Client "1" *-- "0..*" Member: have
 @enduml
