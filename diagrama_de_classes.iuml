@@ -121,7 +121,8 @@ interface Reservation {
 
 class DefaultReservation implements Reservation {
     +reserveId: int
-    +client: Client 
+    +clientId: int 
+    +roomId: int 
     +checkIn: Date
     +checkOut: Date
 
