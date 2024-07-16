@@ -1,42 +1,55 @@
 package br.ufscar.dc.pooa.Client;
 
-
-
-import java.util.Date;
-
 import br.ufscar.dc.pooa.domain.hotel.Hotel;
-import br.ufscar.dc.pooa.domain.users.Client;
+import br.ufscar.dc.pooa.domain.rooms.DefaultRoom;
+import br.ufscar.dc.pooa.domain.rooms.FamilyRoom;
+import br.ufscar.dc.pooa.domain.rooms.SingleRoom;
+import br.ufscar.dc.pooa.domain.rooms.SuiteRoom;
 
 public class HotelClient {
     public static void main(String[] args) {
         Hotel hotel = Hotel.getInstance();
 
-        Client client1 = new Client();
-        client1.setPersonId(1);
-        client1.setName("John Doe");
-        client1.setBirthday(new Date());
-        client1.setPhone("123456789");
-        client1.setUsername("johndoe");
-        client1.setPassword("password123");
-        client1.setSuperUser(false);
-        client1.setActive(true);
+        SingleRoom room1 = new SingleRoom();
+        room1.setRoomId(1);
+        room1.setActive(true);
+        room1.setReserved(false);
+        room1.setWidth(10.0f);
+        room1.setLength(15.0f);
+        room1.setHeight(8.0f);
+        room1.setCapacity(1);
+        room1.setPrice(100.0f);
+        room1.setDescription("Quarto individual com uma cama.");
 
-        Client client2 = new Client();
-        client2.setPersonId(2);
-        client2.setName("Jane Smith");
-        client2.setBirthday(new Date());
-        client2.setPhone("987654321");
-        client2.setUsername("janesmith");
-        client2.setPassword("password456");
-        client2.setSuperUser(false);
-        client2.setActive(true);
+        SuiteRoom room2 = new SuiteRoom();
+        room2.setRoomId(2);
+        room2.setActive(true);
+        room2.setReserved(false);
+        room2.setWidth(20.0f);
+        room2.setLength(30.0f);
+        room2.setHeight(10.0f);
+        room2.setCapacity(4);
+        room2.setPrice(300.0f);
+        room2.setDescription("Suíte luxuosa com duas camas e sala de estar.");
 
-        hotel.addClient(client1);
-        hotel.addClient(client2);
+        FamilyRoom room3 = new FamilyRoom();
+        room3.setRoomId(3);
+        room3.setActive(true);
+        room3.setReserved(false);
+        room3.setWidth(15.0f);
+        room3.setLength(25.0f);
+        room3.setHeight(9.0f);
+        room3.setCapacity(6);
+        room3.setPrice(200.0f);
+        room3.setDescription("Quarto familiar com três camas.");
 
-        System.out.println("Códigos dos clientes no hotel:");
-        for (Client client : hotel.getClients()) {
-            System.out.println("Código do Cliente: " + client.getPersonId() + ", Nome: " + client.getName());
+        hotel.addRoom(room1);
+        hotel.addRoom(room2);
+        hotel.addRoom(room3);
+
+        System.out.println("Códigos dos quartos no hotel:");
+        for (DefaultRoom room : hotel.getRooms()) {
+            System.out.println("Código do Quarto: " + room.getRoomId() + ", Descrição: " + room.getDescription());
         }
     }
 }

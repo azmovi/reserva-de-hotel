@@ -138,4 +138,8 @@ public abstract class DefaultRoom implements Room {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getRoomType() {
+        return this.getClass().getSimpleName();
+    }
 }

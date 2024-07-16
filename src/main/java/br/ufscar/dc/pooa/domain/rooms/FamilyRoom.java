@@ -1,5 +1,5 @@
 package br.ufscar.dc.pooa.domain.rooms;
 
-public class FamilyRoom {
+public class FamilyRoom extends DefaultRoom{
     
 }
