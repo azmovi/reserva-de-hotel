@@ -8,35 +8,25 @@ abstract class Person {
     +phone: str
 }
 
-interface UserActions {
-    +createUser(): int
-    +getUser(): User
-    +updateUser(): bool
-    +deleteUser(): bool
-    +getUsers(): list<User>
-}
-
-interface ReservationActions {
-    +createReservation(): int
-    +getReservation(): Reservation
-    +updateReservation(): bool
-    +deleteReservation(): bool
-    +getReservations(): list<Reservation>
-}
 
 class Client extends DefaultUser {
     +members: list<Member> 
 }
 
-abstract class DefaultUser extends Person implements UserActions {
+abstract class DefaultUser extends Person {
     +username: str
     +password: str
     +isSuperUser: bool 
     +isActive: bool 
 }
 
-class Admin extends DefaultUser implements ReservationActions, RoomActions, ServiceActions {
+class Admin extends DefaultUser {
 
+    +createUser(): int
+    +getUser(): User
+    +updateUser(): bool
+    +deleteUser(): bool
+    +getUsers(): list<User>
 }
 
 
@@ -48,28 +38,11 @@ class Hotel <<Singleton>> {
     +name: str
     +address: Address
     +isFull: bool
-    +users: list<DefaultUser>
+    +clients: list<Client>
+    +admins: list<Admin>
     +rooms: list<DefaultRoom>
     +services: list<Service>
     +reservations: list<Reservation>
-}
-
-interface RoomActions {
-    +createRoom(): int
-    +getRoom(): Room
-    +updateRoom(): bool
-    +deleteRoom(): bool
-    +getRooms(): list<Room>
-    +getAvailableRoom(): list<Room>
-}
-
-interface ServiceActions {
-    +createService(): int
-    +getService(): Service
-    +updateService(): bool
-    +deleteService(): bool
-    +getServices(): list<Service>
-    +getAvailableService(): list<Service>
 }
 
 class Address {
@@ -82,6 +55,12 @@ class Address {
 }
 
 interface Room {
+    +createRoom(): int
+    +getRoom(): Room
+    +updateRoom(): bool
+    +deleteRoom(): bool
+    +getRooms(): list<Room>
+    +getAvailableRoom(): list<Room>
     +getPrice(): float
     +area(): float
     +volume(): float
@@ -109,13 +88,28 @@ class SuiteRoom extends DefaultRoom {
 class FamilyRoom extends DefaultRoom {
 }
 
+interface Service {
+    +createService(): int
+    +getService(): Service
+    +updateService(): bool
+    +deleteService(): bool
+    +getServices(): list<Service>
+    +getAvailableService(): list<Service>
+}
+
 class DefaultService implements Service {
     +name: str
     +capacity: int 
     +description: str
+
 }
 
 interface Reservation {
+    +createReservation(): int
+    +getReservation(): Reservation
+    +updateReservation(): bool
+    +deleteReservation(): bool
+    +getReservations(): list<Reservation>
     +utilTime(): Date
 }
 
@@ -129,7 +123,8 @@ class DefaultReservation implements Reservation {
 }
 
 Hotel "1" o-- "1"     Address: have
-Hotel "1" *-- "0..*"  DefaultUser: have
+Hotel "1" *-- "1..*"  Admin: have
+Hotel "1" *-- "0..*"  Client: have
 Hotel "1" o-- "0..*"  DefaultRoom: have
 Hotel "1" o-- "0..*"  DefaultService: have
 Hotel "1" o-- "0..*"  DefaultReservation: have
@@ -138,6 +133,7 @@ Admin "1" --- "0..*"  Service: manages
 Admin "1" --- "0..*"  Room: manages
 Admin "1" --- "0..*"  Reservation: manages
 Admin "1" --- "1"     Hotel: manages
+
 
 Client "1" *-- "0..*" Member: have
 @enduml
