@@ -11,6 +11,8 @@ abstract class Person {
 
 class Client extends DefaultUser {
     +members: list<Member>
+    state : Reservation
+    add_member(): bool
 }
 
 abstract class DefaultUser extends Person {
