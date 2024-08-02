@@ -22,9 +22,10 @@ abstract class DefaultUser extends Person {
     +isActive: bool 
 }
 
-class Admin extends DefaultUser {
+class Admin <<Singleton>> extends DefaultUser {
 
     +createUser(): int
+    +getInstance(): Admin
     +getUser(): User
     +updateUser(): bool
     +deleteUser(): bool
