@@ -10,7 +10,9 @@ abstract class Person {
 
 
 class Client extends DefaultUser {
-    +members: list<Member> 
+    +members: list<Member>
+    +state : Reservation
+    add_member(): bool
 }
 
 abstract class DefaultUser extends Person {
@@ -20,13 +22,18 @@ abstract class DefaultUser extends Person {
     +isActive: bool 
 }
 
-class Admin extends DefaultUser {
+class Admin <<Singleton>> extends DefaultUser {
 
     +createUser(): int
+    +getInstance(): Admin
     +getUser(): User
     +updateUser(): bool
     +deleteUser(): bool
     +getUsers(): list<User>
+    +makeReservation(): bool
+    +cancelReservation(): bool
+    getReservations(): list<Reservation>
+    +createRoom(): bool
 }
 
 
@@ -113,14 +120,23 @@ interface Reservation {
     +utilTime(): Date
 }
 
-class DefaultReservation implements Reservation {
+class Reserved implements Reservation {
     +reserveId: int
-    +clientId: int 
-    +roomId: int 
+    +clientId: int
+    +roomId: int
     +checkIn: Date
     +checkOut: Date
-
 }
+
+class Canceled implements Reservation {
+    +reserveId: int
+    +clientId: int
+    +roomId: int
+    +checkIn: Date
+    +checkOut: Date
+}
+
+
 
 Hotel "1" o-- "1"     Address: have
 Hotel "1" *-- "1..*"  Admin: have
