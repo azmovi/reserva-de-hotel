@@ -1,10 +1,15 @@
 package br.ufscar.dc.pooa.domain.users;
 
+import br.ufscar.dc.pooa.interfaces.Reservation;
+
 import java.util.List;
 
 import java.util.ArrayList;
 
 public class Client extends DefaultUser {
+    private int Id;
+    private Reservation reservation;
+
     private List<Member> members;
 
     public Client() {
@@ -27,5 +32,22 @@ public class Client extends DefaultUser {
         this.members.remove(member);
     }
 
-    // Outros métodos e lógica específicos do cliente podem ser adicionados aqui
+    public void setId(int id) {
+        Id = id;
+    }
+
+    public Reservation getReservation() {
+        return reservation;
+    }
+
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
+    }
+
+
+    public int getId() {
+        return Id;
+    }
+
+
 }

@@ -4,10 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 public interface Reservation {
-    int createReservation();
+    boolean createReservation();
     Reservation getReservation();
-    boolean updateReservation();
-    boolean deleteReservation();
-    List<Reservation> getReservations();
+    Reservation updateReservation(int id, String date, String time, String room, String user);
     Date utilTime();
 }
