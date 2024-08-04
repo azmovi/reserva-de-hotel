@@ -3,7 +3,6 @@ package br.ufscar.dc.pooa.domain.hotel;
 import java.util.List;
 
 import br.ufscar.dc.pooa.domain.Address;
-import br.ufscar.dc.pooa.domain.DefaultReservation;
 import br.ufscar.dc.pooa.domain.DefaultService;
 import br.ufscar.dc.pooa.domain.rooms.DefaultRoom;
 import br.ufscar.dc.pooa.domain.users.Admin;

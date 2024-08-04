@@ -142,4 +142,8 @@ public abstract class DefaultRoom implements Room {
     public String getRoomType() {
         return this.getClass().getSimpleName();
     }
+
+    public int getId() {
+        return roomId;
+    }
 }
