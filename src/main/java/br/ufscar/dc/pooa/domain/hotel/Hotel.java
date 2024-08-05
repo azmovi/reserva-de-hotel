@@ -19,14 +19,13 @@ public class Hotel {
     private List<Admin> admins;
     private List<DefaultRoom> rooms;
     private List<DefaultService> services;
-    private List<DefaultReservation> reservations;
+
 
     private Hotel() {
         this.clients = new ArrayList<>();
         this.admins = new ArrayList<>();
         this.rooms = new ArrayList<>();
         this.services = new ArrayList<>();
-        this.reservations = new ArrayList<>();
     }
 
     public static Hotel getInstance() {
@@ -92,13 +91,6 @@ public class Hotel {
         this.services = services;
     }
 
-    public List<DefaultReservation> getReservations() {
-        return reservations;
-    }
-
-    public void setReservations(List<DefaultReservation> reservations) {
-        this.reservations = reservations;
-    }
 
     // Métodos para adicionar e remover clientes, administradores, quartos, serviços e reservas
 
@@ -134,11 +126,4 @@ public class Hotel {
         this.services.remove(service);
     }
 
-    public void addReservation(DefaultReservation reservation) {
-        this.reservations.add(reservation);
-    }
-
-    public void removeReservation(DefaultReservation reservation) {
-        this.reservations.remove(reservation);
-    }
 }

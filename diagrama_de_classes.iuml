@@ -10,22 +10,26 @@ abstract class Person {
 
 
 class Client extends DefaultUser {
-    +clientId: int
     +members: list<Member>
     +state : Reservation
     add_member(): bool
+    remove_member(): bool
+    +setReservationState(): void
+    +getReservationState(): ReservationState
+    +updateReservationState(): void
 }
 
 abstract class DefaultUser extends Person {
     +username: str
     +password: str
+    +email: str
     +isSuperUser: bool 
     +isActive: bool 
 }
 
 class Admin <<Singleton>> extends DefaultUser {
 
-    +createUser(DefaultUser user): bool
+    +createUser(String name,String password,bool isSuperUser,bool isActive): bool
     +getInstance(): Admin
     +getUser(): User
     +updateUser(): bool
@@ -112,27 +116,26 @@ class DefaultService implements Service {
 
 }
 
-interface Reservation <<State>> {
-    +createReservation(): bool
+interface ReservationState <<State>> {
     +getReservation(): Reservation
-    +updateReservation(int id, String date, String time, String room, String user): Reservation
-    +utilTime(): Date
+    +updateReservation(String date, String time, String room, String user): Reservation
 }
 
 class Reserved <<Singleton>> implements Reservation {
-    +reserveId: int
-    +clientId: int
-    +roomId: int
-    +checkIn: Date
-    +checkOut: Date
 }
 
 class Canceled <<Singleton>> implements Reservation {
-    +reserveId: int
-    +clientId: int
-    +roomId: int
-    +checkIn: Date
-    +checkOut: Date
+}
+
+class ConexaoUtil {
+    +getConnection(): Connection
+}
+
+class ClientDAO {
+    +insert(Client): void
+    +update(Client): void
+    +delete(int id): void
+    +readClientList(): list<Client>
 }
 
 
