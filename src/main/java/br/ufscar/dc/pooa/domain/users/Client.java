@@ -1,6 +1,7 @@
 package br.ufscar.dc.pooa.domain.users;
 
-import br.ufscar.dc.pooa.interfaces.Reservation;
+import br.ufscar.dc.pooa.interfaces.ReservationState;
+
 
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 
 public class Client extends DefaultUser {
     private int Id;
-    private Reservation reservation;
+    private ReservationState reservation;
 
     private List<Member> members;
 
@@ -36,12 +37,17 @@ public class Client extends DefaultUser {
         Id = id;
     }
 
-    public Reservation getReservation() {
+    public ReservationState getReservation() {
         return reservation;
     }
 
-    public void setReservation(Reservation reservation) {
+    public void setReservation(ReservationState reservation) {
         this.reservation = reservation;
+    }
+
+    public void UpdateReservation() {
+        this.reservation.updateReservation();
+
     }
 
 

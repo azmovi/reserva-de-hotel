@@ -14,6 +14,10 @@ class Client extends DefaultUser {
     +members: list<Member>
     +state : Reservation
     add_member(): bool
+    remove_member(): bool
+    +setReservationState(): void
+    +getReservationState(): ReservationState
+    +updateReservationState(): void
 }
 
 abstract class DefaultUser extends Person {
@@ -112,27 +116,15 @@ class DefaultService implements Service {
 
 }
 
-interface Reservation <<State>> {
-    +createReservation(): bool
+interface ReservationState <<State>> {
     +getReservation(): Reservation
-    +updateReservation(int id, String date, String time, String room, String user): Reservation
-    +utilTime(): Date
+    +updateReservation(String date, String time, String room, String user): Reservation
 }
 
 class Reserved <<Singleton>> implements Reservation {
-    +reserveId: int
-    +clientId: int
-    +roomId: int
-    +checkIn: Date
-    +checkOut: Date
 }
 
 class Canceled <<Singleton>> implements Reservation {
-    +reserveId: int
-    +clientId: int
-    +roomId: int
-    +checkIn: Date
-    +checkOut: Date
 }
 
 

@@ -1,72 +1,35 @@
 package br.ufscar.dc.pooa.domain.reservation;
 
-import br.ufscar.dc.pooa.interfaces.Reservation;
+import br.ufscar.dc.pooa.interfaces.ReservationState;
+import br.ufscar.dc.pooa.interfaces.ReservationState;
 
-import java.util.Date;
-import java.util.List;
 
-public class Reserved implements Reservation {
-    private int id;
-    private String date;
-    private String time;
-    private String room;
-    private String user;
+public class Reserved implements ReservationState {
 
     private static Reserved instance = null;
 
-    private Reserved(int id, String date, String time, String room, String user) {
-        this.id = id;
-        this.date = date;
-        this.time = time;
-        this.room = room;
-        this.user = user;
+    private Reserved() {
+
     }
 
-    public static Reserved getInstance(int id, String date, String time, String room, String user) {
+    public static Reserved getInstance() {
         if (instance == null) {
-            return new Reserved(id, date, time, room, user);
+            return new Reserved();
         }
         return instance;
     }
 
-    public int getId() {
-        return id;
-    }
 
-    public String getDate() {
-        return date;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public String getRoom() {
-        return room;
-    }
-
-    public String getUser() {
-        return user;
+    @Override
+    public ReservationState getReservation() {
+        return instance;
     }
 
     @Override
-    public boolean createReservation() {
-        return false;
-    }
-
-    @Override
-    public Reservation getReservation() {
-        return null;
-    }
-
-    @Override
-    public Reservation updateReservation(int id, String date, String time, String room, String user) {
-        return Canceled.getInstance(id, date, time, room, user);
+    public ReservationState updateReservation() {
+        return Canceled.getInstance();
     }
 
 
-    @Override
-    public Date utilTime() {
-        return null;
-    }
+
 }
