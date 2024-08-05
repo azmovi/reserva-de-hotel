@@ -8,12 +8,26 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Client extends DefaultUser {
-    private int Id;
+
     private ReservationState reservation;
 
     private List<Member> members;
 
+
+    public Client(String username, String password, String email, boolean isSuperUser, boolean isActive) {
+        super();
+        this.members = new ArrayList<>();
+        this.setUsername(username);
+        this.setPassword(password);
+        this.setEmail(email);
+        int valorConvertido_super = isSuperUser ? 1 : 0;
+        int valorConvertido_active = isActive ? 1 : 0;
+        this.setSuperUser(valorConvertido_super);
+        this.setActive(valorConvertido_active);
+    }
+
     public Client() {
+        super();
         this.members = new ArrayList<>();
     }
 
@@ -34,7 +48,7 @@ public class Client extends DefaultUser {
     }
 
     public void setId(int id) {
-        Id = id;
+        setPersonId(id);
     }
 
     public ReservationState getReservation() {
@@ -52,7 +66,7 @@ public class Client extends DefaultUser {
 
 
     public int getId() {
-        return Id;
+        return getPersonId();
     }
 
 

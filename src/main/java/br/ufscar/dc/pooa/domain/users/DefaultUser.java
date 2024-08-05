@@ -5,6 +5,7 @@ abstract class DefaultUser extends Person {
     private String password;
     private boolean isSuperUser;
     private boolean isActive;
+    private String email;
 
     // Getters and Setters
 
@@ -28,15 +29,23 @@ abstract class DefaultUser extends Person {
         return isSuperUser;
     }
 
-    public void setSuperUser(boolean superUser) {
-        isSuperUser = superUser;
+    public void setSuperUser(int superUser) {
+        boolean isSuperUser = superUser == 1;
     }
 
     public boolean isActive() {
         return isActive;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setActive(int active) {
+        boolean isActive = active == 1;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

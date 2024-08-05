@@ -1,5 +1,6 @@
 package br.ufscar.dc.pooa.dao;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -32,13 +33,10 @@ public class ConexaoUtil {
     }
 
 
-    public void Connection() {
-        try {
-            DriverManager.getConnection(url, usuario, senha);
-            System.out.println("Conectado com sucesso!");
-        } catch (SQLException e) {
-            System.out.println("Erro ao conectar com o banco de dados:  " + e.getMessage());
-        }
+    public Connection Connection() throws SQLException, ClassNotFoundException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection connection = DriverManager.getConnection(url, usuario, senha);
+        return connection;
 
     }
 

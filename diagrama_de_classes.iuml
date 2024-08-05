@@ -10,7 +10,6 @@ abstract class Person {
 
 
 class Client extends DefaultUser {
-    +clientId: int
     +members: list<Member>
     +state : Reservation
     add_member(): bool
@@ -23,13 +22,14 @@ class Client extends DefaultUser {
 abstract class DefaultUser extends Person {
     +username: str
     +password: str
+    +email: str
     +isSuperUser: bool 
     +isActive: bool 
 }
 
 class Admin <<Singleton>> extends DefaultUser {
 
-    +createUser(DefaultUser user): bool
+    +createUser(String name,String password,bool isSuperUser,bool isActive): bool
     +getInstance(): Admin
     +getUser(): User
     +updateUser(): bool
@@ -125,6 +125,17 @@ class Reserved <<Singleton>> implements Reservation {
 }
 
 class Canceled <<Singleton>> implements Reservation {
+}
+
+class ConexaoUtil {
+    +getConnection(): Connection
+}
+
+class ClientDAO {
+    +insert(Client): void
+    +update(Client): void
+    +delete(int id): void
+    +readClientList(): list<Client>
 }
 
 

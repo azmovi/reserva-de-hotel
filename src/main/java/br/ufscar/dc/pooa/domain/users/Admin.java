@@ -1,11 +1,13 @@
 package br.ufscar.dc.pooa.domain.users;
 
+import br.ufscar.dc.pooa.dao.ClientDAO;
 import br.ufscar.dc.pooa.domain.hotel.Hotel;
 import br.ufscar.dc.pooa.domain.rooms.DefaultRoom;
 import br.ufscar.dc.pooa.domain.rooms.FamilyRoom;
 import br.ufscar.dc.pooa.domain.rooms.SingleRoom;
 import br.ufscar.dc.pooa.domain.rooms.SuiteRoom;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +26,12 @@ public class Admin extends DefaultUser{
         return instance;
     }
     
-    public boolean createUser(DefaultUser user) {
+    public boolean createUser(String username, String password, String email, boolean isSuperUser, boolean isActive) throws SQLException, ClassNotFoundException {
 
+        DefaultUser user = new Client("username", "password", "email", isSuperUser, isActive);
+        int valorConvertido_super = isSuperUser ? 1 : 0;
+        int valorConvertido_active = isActive ? 1 : 0;
+        ClientDAO.createClient(username, password, email, valorConvertido_super, valorConvertido_active);
         return Hotel.getInstance().getClients().add((Client) user);
     }
 
